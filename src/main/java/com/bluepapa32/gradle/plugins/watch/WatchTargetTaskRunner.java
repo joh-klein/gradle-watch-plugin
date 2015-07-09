@@ -121,7 +121,11 @@ public class WatchTargetTaskRunner implements AutoCloseable {
     private String[] getArguments(StartParameter parameter) {
         List<String> args = new ArrayList<>();
         for (Map.Entry<String, String> e : parameter.getProjectProperties().entrySet()) {
-            args.add("-P" + e.getKey() + "=" + e.getValue());
+            if (!e.getValue().isEmpty()) {
+                args.add("-P" + e.getKey() + "=" + e.getValue());
+            } else {
+                args.add("-P" + e.getKey());
+            }
         }
         return args.toArray(new String[args.size()]);
     }
